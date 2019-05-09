@@ -1,0 +1,1307 @@
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 1
+
+
+   1               		.file	"lab2.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	__vector_10
+  10               		.type	__vector_10, @function
+  11               	__vector_10:
+  12 0000 1F92      		push __zero_reg__
+  13 0002 0F92      		push r0
+  14 0004 0FB6      		in r0,__SREG__
+  15 0006 0F92      		push r0
+  16 0008 1124      		clr __zero_reg__
+  17 000a 2F93      		push r18
+  18 000c 8F93      		push r24
+  19 000e 9F93      		push r25
+  20               	/* prologue: Signal */
+  21               	/* frame size = 0 */
+  22 0010 8091 0000 		lds r24,sound
+  23 0014 9091 0000 		lds r25,(sound)+1
+  24 0018 8F5F      		subi r24,lo8(-1)
+  25 001a 9F4F      		sbci r25,hi8(-1)
+  26 001c 01F0      		breq .L5
+  27 001e 8091 0000 		lds r24,state
+  28 0022 9091 0000 		lds r25,(state)+1
+  29 0026 0197      		sbiw r24,1
+  30 0028 01F0      		breq .L7
+  31 002a 80E1      		ldi r24,lo8(16)
+  32 002c 88BB      		out 56-32,r24
+  33 002e 81E0      		ldi r24,lo8(1)
+  34 0030 90E0      		ldi r25,hi8(1)
+  35 0032 9093 0000 		sts (state)+1,r25
+  36 0036 8093 0000 		sts state,r24
+  37               	.L4:
+  38 003a 8091 0000 		lds r24,sound
+  39 003e 9091 0000 		lds r25,(sound)+1
+  40 0042 84BD      		out 68-32,r24
+  41               	.L5:
+  42               	/* epilogue start */
+  43 0044 9F91      		pop r25
+  44 0046 8F91      		pop r24
+  45 0048 2F91      		pop r18
+  46 004a 0F90      		pop r0
+  47 004c 0FBE      		out __SREG__,r0
+  48 004e 0F90      		pop r0
+  49 0050 1F90      		pop __zero_reg__
+  50 0052 1895      		reti
+  51               	.L7:
+  52 0054 18BA      		out 56-32,__zero_reg__
+  53 0056 1092 0000 		sts (state)+1,__zero_reg__
+  54 005a 1092 0000 		sts state,__zero_reg__
+  55 005e 00C0      		rjmp .L4
+  56               		.size	__vector_10, .-__vector_10
+  57               	.global	__vector_5
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 2
+
+
+  58               		.type	__vector_5, @function
+  59               	__vector_5:
+  60 0060 1F92      		push __zero_reg__
+  61 0062 0F92      		push r0
+  62 0064 0FB6      		in r0,__SREG__
+  63 0066 0F92      		push r0
+  64 0068 1124      		clr __zero_reg__
+  65 006a 8F93      		push r24
+  66 006c 9F93      		push r25
+  67               	/* prologue: Signal */
+  68               	/* frame size = 0 */
+  69 006e 8091 0000 		lds r24,flag
+  70 0072 9091 0000 		lds r25,(flag)+1
+  71 0076 892B      		or r24,r25
+  72 0078 01F4      		brne .L9
+  73 007a 81E0      		ldi r24,lo8(1)
+  74 007c 90E0      		ldi r25,hi8(1)
+  75 007e 9093 0000 		sts (flag)+1,r25
+  76 0082 8093 0000 		sts flag,r24
+  77               	.L9:
+  78 0086 8091 0000 		lds r24,flag
+  79 008a 9091 0000 		lds r25,(flag)+1
+  80 008e 0197      		sbiw r24,1
+  81 0090 01F0      		breq .L12
+  82               	.L11:
+  83               	/* epilogue start */
+  84 0092 9F91      		pop r25
+  85 0094 8F91      		pop r24
+  86 0096 0F90      		pop r0
+  87 0098 0FBE      		out __SREG__,r0
+  88 009a 0F90      		pop r0
+  89 009c 1F90      		pop __zero_reg__
+  90 009e 1895      		reti
+  91               	.L12:
+  92 00a0 8091 0000 		lds r24,curr
+  93 00a4 8823      		tst r24
+  94 00a6 01F0      		breq .L11
+  95 00a8 9091 0000 		lds r25,curr
+  96 00ac 8091 0000 		lds r24,meal
+  97 00b0 9817      		cp r25,r24
+  98 00b2 01F0      		breq .L11
+  99 00b4 8091 0000 		lds r24,curr
+ 100 00b8 8150      		subi r24,lo8(-(-1))
+ 101 00ba 8093 0000 		sts curr,r24
+ 102 00be 9F91      		pop r25
+ 103 00c0 8F91      		pop r24
+ 104 00c2 0F90      		pop r0
+ 105 00c4 0FBE      		out __SREG__,r0
+ 106 00c6 0F90      		pop r0
+ 107 00c8 1F90      		pop __zero_reg__
+ 108 00ca 1895      		reti
+ 109               		.size	__vector_5, .-__vector_5
+ 110               	.global	__vector_6
+ 111               		.type	__vector_6, @function
+ 112               	__vector_6:
+ 113 00cc 1F92      		push __zero_reg__
+ 114 00ce 0F92      		push r0
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 3
+
+
+ 115 00d0 0FB6      		in r0,__SREG__
+ 116 00d2 0F92      		push r0
+ 117 00d4 1124      		clr __zero_reg__
+ 118 00d6 8F93      		push r24
+ 119 00d8 9F93      		push r25
+ 120               	/* prologue: Signal */
+ 121               	/* frame size = 0 */
+ 122 00da 8091 0000 		lds r24,flag
+ 123 00de 9091 0000 		lds r25,(flag)+1
+ 124 00e2 0197      		sbiw r24,1
+ 125 00e4 01F0      		breq .L16
+ 126               	.L15:
+ 127               	/* epilogue start */
+ 128 00e6 9F91      		pop r25
+ 129 00e8 8F91      		pop r24
+ 130 00ea 0F90      		pop r0
+ 131 00ec 0FBE      		out __SREG__,r0
+ 132 00ee 0F90      		pop r0
+ 133 00f0 1F90      		pop __zero_reg__
+ 134 00f2 1895      		reti
+ 135               	.L16:
+ 136 00f4 8091 0000 		lds r24,curr
+ 137 00f8 8730      		cpi r24,lo8(7)
+ 138 00fa 01F0      		breq .L15
+ 139 00fc 9091 0000 		lds r25,curr
+ 140 0100 8091 0000 		lds r24,meal
+ 141 0104 9817      		cp r25,r24
+ 142 0106 01F0      		breq .L15
+ 143 0108 8091 0000 		lds r24,curr
+ 144 010c 8F5F      		subi r24,lo8(-(1))
+ 145 010e 8093 0000 		sts curr,r24
+ 146 0112 9F91      		pop r25
+ 147 0114 8F91      		pop r24
+ 148 0116 0F90      		pop r0
+ 149 0118 0FBE      		out __SREG__,r0
+ 150 011a 0F90      		pop r0
+ 151 011c 1F90      		pop __zero_reg__
+ 152 011e 1895      		reti
+ 153               		.size	__vector_6, .-__vector_6
+ 154               	.global	DisplayTask
+ 155               		.type	DisplayTask, @function
+ 156               	DisplayTask:
+ 157 0120 6F92      		push r6
+ 158 0122 7F92      		push r7
+ 159 0124 8F92      		push r8
+ 160 0126 9F92      		push r9
+ 161 0128 AF92      		push r10
+ 162 012a BF92      		push r11
+ 163 012c CF92      		push r12
+ 164 012e DF92      		push r13
+ 165 0130 EF92      		push r14
+ 166 0132 FF92      		push r15
+ 167 0134 0F93      		push r16
+ 168 0136 1F93      		push r17
+ 169 0138 DF93      		push r29
+ 170 013a CF93      		push r28
+ 171 013c 0F92      		push __tmp_reg__
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 4
+
+
+ 172 013e CDB7      		in r28,__SP_L__
+ 173 0140 DEB7      		in r29,__SP_H__
+ 174               	/* prologue: function */
+ 175               	/* frame size = 1 */
+ 176 0142 1092 0000 		sts (flag)+1,__zero_reg__
+ 177 0146 1092 0000 		sts flag,__zero_reg__
+ 178 014a 4E01      		movw r8,r28
+ 179 014c 0894      		sec
+ 180 014e 811C      		adc r8,__zero_reg__
+ 181 0150 911C      		adc r9,__zero_reg__
+ 182 0152 48E8      		ldi r20,lo8(5000)
+ 183 0154 A42E      		mov r10,r20
+ 184 0156 43E1      		ldi r20,hi8(5000)
+ 185 0158 B42E      		mov r11,r20
+ 186 015a 30E4      		ldi r19,lo8(64)
+ 187 015c 732E      		mov r7,r19
+ 188 015e 00E9      		ldi r16,lo8(400)
+ 189 0160 11E0      		ldi r17,hi8(400)
+ 190 0162 6624      		clr r6
+ 191 0164 6A94      		dec r6
+ 192               	.L37:
+ 193 0166 8091 0000 		lds r24,cnt
+ 194 016a 9091 0000 		lds r25,(cnt)+1
+ 195 016e 0A97      		sbiw r24,10
+ 196 0170 04F0      		brlt .+2
+ 197 0172 00C0      		rjmp .L39
+ 198               	.L18:
+ 199 0174 E091 0000 		lds r30,stage
+ 200 0178 E330      		cpi r30,lo8(3)
+ 201 017a 01F4      		brne .+2
+ 202 017c 00C0      		rjmp .L40
+ 203               	.L19:
+ 204 017e F0E0      		ldi r31,lo8(0)
+ 205 0180 EE0F      		lsl r30
+ 206 0182 FF1F      		rol r31
+ 207 0184 E050      		subi r30,lo8(-(timer))
+ 208 0186 F040      		sbci r31,hi8(-(timer))
+ 209 0188 8081      		ld r24,Z
+ 210 018a 9181      		ldd r25,Z+1
+ 211 018c 97FD      		sbrc r25,7
+ 212 018e 00C0      		rjmp .L41
+ 213 0190 8091 0000 		lds r24,Sem
+ 214 0194 9091 0000 		lds r25,(Sem)+1
+ 215 0198 60E0      		ldi r22,lo8(0)
+ 216 019a 70E0      		ldi r23,hi8(0)
+ 217 019c A401      		movw r20,r8
+ 218 019e 0E94 0000 		call OSSemPend
+ 219 01a2 8091 0000 		lds r24,stage
+ 220 01a6 282F      		mov r18,r24
+ 221 01a8 30E0      		ldi r19,lo8(0)
+ 222 01aa 220F      		lsl r18
+ 223 01ac 331F      		rol r19
+ 224 01ae 80E0      		ldi r24,lo8(timer)
+ 225 01b0 C82E      		mov r12,r24
+ 226 01b2 80E0      		ldi r24,hi8(timer)
+ 227 01b4 D82E      		mov r13,r24
+ 228 01b6 C20E      		add r12,r18
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 5
+
+
+ 229 01b8 D31E      		adc r13,r19
+ 230 01ba F601      		movw r30,r12
+ 231 01bc E080      		ld r14,Z
+ 232 01be F180      		ldd r15,Z+1
+ 233 01c0 C701      		movw r24,r14
+ 234 01c2 68EC      		ldi r22,lo8(200)
+ 235 01c4 70E0      		ldi r23,hi8(200)
+ 236 01c6 0E94 0000 		call __divmodhi4
+ 237 01ca CB01      		movw r24,r22
+ 238 01cc 6AE0      		ldi r22,lo8(10)
+ 239 01ce 70E0      		ldi r23,hi8(10)
+ 240 01d0 0E94 0000 		call __divmodhi4
+ 241 01d4 FC01      		movw r30,r24
+ 242 01d6 E050      		subi r30,lo8(-(FND_DATA))
+ 243 01d8 F040      		sbci r31,hi8(-(FND_DATA))
+ 244 01da 8081      		ld r24,Z
+ 245 01dc 85BB      		out 53-32,r24
+ 246 01de 8091 0000 		lds r24,FND_sel
+ 247 01e2 8093 6500 		sts 101,r24
+ 248 01e6 C501      		movw r24,r10
+ 249               	/* #APP */
+ 250               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 251 01e8 0197      		1: sbiw r24,1
+ 252 01ea 01F4      		brne 1b
+ 253               	 ;  0 "" 2
+ 254               	/* #NOAPP */
+ 255 01ec C701      		movw r24,r14
+ 256 01ee 60ED      		ldi r22,lo8(2000)
+ 257 01f0 77E0      		ldi r23,hi8(2000)
+ 258 01f2 0E94 0000 		call __divmodhi4
+ 259 01f6 FB01      		movw r30,r22
+ 260 01f8 E050      		subi r30,lo8(-(FND_DATA))
+ 261 01fa F040      		sbci r31,hi8(-(FND_DATA))
+ 262 01fc 8081      		ld r24,Z
+ 263 01fe 85BB      		out 53-32,r24
+ 264 0200 8091 0000 		lds r24,FND_sel+1
+ 265 0204 8093 6500 		sts 101,r24
+ 266 0208 C501      		movw r24,r10
+ 267               	/* #APP */
+ 268               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 269 020a 0197      		1: sbiw r24,1
+ 270 020c 01F4      		brne 1b
+ 271               	 ;  0 "" 2
+ 272               	/* #NOAPP */
+ 273 020e 75BA      		out 53-32,r7
+ 274 0210 8091 0000 		lds r24,FND_sel+2
+ 275 0214 8093 6500 		sts 101,r24
+ 276 0218 C501      		movw r24,r10
+ 277               	/* #APP */
+ 278               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 279 021a 0197      		1: sbiw r24,1
+ 280 021c 01F4      		brne 1b
+ 281               	 ;  0 "" 2
+ 282               	/* #NOAPP */
+ 283 021e E091 0000 		lds r30,cnt
+ 284 0222 F091 0000 		lds r31,(cnt)+1
+ 285 0226 E050      		subi r30,lo8(-(FND_DATA))
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 6
+
+
+ 286 0228 F040      		sbci r31,hi8(-(FND_DATA))
+ 287 022a 8081      		ld r24,Z
+ 288 022c 85BB      		out 53-32,r24
+ 289 022e 8091 0000 		lds r24,FND_sel+3
+ 290 0232 8093 6500 		sts 101,r24
+ 291 0236 C501      		movw r24,r10
+ 292               	/* #APP */
+ 293               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 294 0238 0197      		1: sbiw r24,1
+ 295 023a 01F4      		brne 1b
+ 296               	 ;  0 "" 2
+ 297               	/* #NOAPP */
+ 298 023c 8091 0000 		lds r24,flag
+ 299 0240 9091 0000 		lds r25,(flag)+1
+ 300 0244 0197      		sbiw r24,1
+ 301 0246 01F4      		brne .+2
+ 302 0248 00C0      		rjmp .L42
+ 303               	.L22:
+ 304 024a 8091 0000 		lds r24,flag
+ 305 024e 9091 0000 		lds r25,(flag)+1
+ 306 0252 0197      		sbiw r24,1
+ 307 0254 01F4      		brne .+2
+ 308 0256 00C0      		rjmp .L43
+ 309 0258 6BBA      		out 59-32,r6
+ 310               	.L25:
+ 311 025a 9091 0000 		lds r25,curr
+ 312 025e 8091 0000 		lds r24,meal
+ 313 0262 9817      		cp r25,r24
+ 314 0264 01F4      		brne .L38
+ 315 0266 00C0      		rjmp .L45
+ 316               	.L33:
+ 317 0268 0E94 0000 		call rand
+ 318 026c 68E0      		ldi r22,lo8(8)
+ 319 026e 70E0      		ldi r23,hi8(8)
+ 320 0270 0E94 0000 		call __divmodhi4
+ 321 0274 8093 0000 		sts meal,r24
+ 322               	.L38:
+ 323 0278 9091 0000 		lds r25,curr
+ 324 027c 8091 0000 		lds r24,meal
+ 325 0280 9817      		cp r25,r24
+ 326 0282 01F0      		breq .L33
+ 327 0284 8091 0000 		lds r24,Sem
+ 328 0288 9091 0000 		lds r25,(Sem)+1
+ 329 028c 0E94 0000 		call OSSemPost
+ 330 0290 8091 0000 		lds r24,cnt
+ 331 0294 9091 0000 		lds r25,(cnt)+1
+ 332 0298 0A97      		sbiw r24,10
+ 333 029a 04F4      		brge .+2
+ 334 029c 00C0      		rjmp .L18
+ 335               	.L39:
+ 336 029e 8091 0000 		lds r24,Mbox
+ 337 02a2 9091 0000 		lds r25,(Mbox)+1
+ 338 02a6 61E0      		ldi r22,lo8(1)
+ 339 02a8 70E0      		ldi r23,hi8(1)
+ 340 02aa 0E94 0000 		call OSMboxPost
+ 341 02ae E091 0000 		lds r30,stage
+ 342 02b2 E330      		cpi r30,lo8(3)
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 7
+
+
+ 343 02b4 01F0      		breq .+2
+ 344 02b6 00C0      		rjmp .L19
+ 345               	.L40:
+ 346 02b8 8091 0000 		lds r24,MQueue
+ 347 02bc 9091 0000 		lds r25,(MQueue)+1
+ 348 02c0 61E0      		ldi r22,lo8(1)
+ 349 02c2 70E0      		ldi r23,hi8(1)
+ 350 02c4 0E94 0000 		call OSQPost
+ 351 02c8 00C0      		rjmp .L37
+ 352               	.L45:
+ 353 02ca 8091 0000 		lds r24,cnt
+ 354 02ce 9091 0000 		lds r25,(cnt)+1
+ 355 02d2 8F5F      		subi r24,lo8(-1)
+ 356 02d4 9F4F      		sbci r25,hi8(-1)
+ 357 02d6 01F0      		breq .L27
+ 358 02d8 E0E0      		ldi r30,lo8(eat)
+ 359 02da F0E0      		ldi r31,hi8(eat)
+ 360               	.L29:
+ 361 02dc 8081      		ld r24,Z
+ 362 02de 9181      		ldd r25,Z+1
+ 363 02e0 9093 0000 		sts (sound)+1,r25
+ 364 02e4 8093 0000 		sts sound,r24
+ 365 02e8 24EC      		ldi r18,lo8(2500)
+ 366 02ea 39E0      		ldi r19,hi8(2500)
+ 367               	.L28:
+ 368 02ec C801      		movw r24,r16
+ 369               	/* #APP */
+ 370               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 371 02ee 0197      		1: sbiw r24,1
+ 372 02f0 01F4      		brne 1b
+ 373               	 ;  0 "" 2
+ 374               	/* #NOAPP */
+ 375 02f2 2150      		subi r18,lo8(-(-1))
+ 376 02f4 3040      		sbci r19,hi8(-(-1))
+ 377 02f6 01F4      		brne .L28
+ 378 02f8 3296      		adiw r30,2
+ 379 02fa 20E0      		ldi r18,hi8(eat+6)
+ 380 02fc E030      		cpi r30,lo8(eat+6)
+ 381 02fe F207      		cpc r31,r18
+ 382 0300 01F4      		brne .L29
+ 383               	.L27:
+ 384 0302 8091 0000 		lds r24,cnt
+ 385 0306 9091 0000 		lds r25,(cnt)+1
+ 386 030a 0196      		adiw r24,1
+ 387 030c 9093 0000 		sts (cnt)+1,r25
+ 388 0310 8093 0000 		sts cnt,r24
+ 389 0314 00C0      		rjmp .L38
+ 390               	.L43:
+ 391 0316 2050      		subi r18,lo8(-(timer))
+ 392 0318 3040      		sbci r19,hi8(-(timer))
+ 393 031a F901      		movw r30,r18
+ 394 031c 8081      		ld r24,Z
+ 395 031e 9181      		ldd r25,Z+1
+ 396 0320 64E6      		ldi r22,lo8(100)
+ 397 0322 70E0      		ldi r23,hi8(100)
+ 398 0324 0E94 0000 		call __divmodhi4
+ 399 0328 60FF      		sbrs r22,0
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 8
+
+
+ 400 032a 00C0      		rjmp .L24
+ 401 032c E091 0000 		lds r30,curr
+ 402 0330 F0E0      		ldi r31,lo8(0)
+ 403 0332 E050      		subi r30,lo8(-(LED_sel))
+ 404 0334 F040      		sbci r31,hi8(-(LED_sel))
+ 405 0336 8081      		ld r24,Z
+ 406 0338 8BBB      		out 59-32,r24
+ 407 033a 00C0      		rjmp .L25
+ 408               	.L42:
+ 409 033c 0894      		sec
+ 410 033e E108      		sbc r14,__zero_reg__
+ 411 0340 F108      		sbc r15,__zero_reg__
+ 412 0342 F601      		movw r30,r12
+ 413 0344 F182      		std Z+1,r15
+ 414 0346 E082      		st Z,r14
+ 415 0348 00C0      		rjmp .L22
+ 416               	.L41:
+ 417 034a 8091 0000 		lds r24,f_grp
+ 418 034e 9091 0000 		lds r25,(f_grp)+1
+ 419 0352 6FEF      		ldi r22,lo8(-1)
+ 420 0354 41E0      		ldi r20,lo8(1)
+ 421 0356 9401      		movw r18,r8
+ 422 0358 0E94 0000 		call OSFlagPost
+ 423 035c 00C0      		rjmp .L37
+ 424               	.L24:
+ 425 035e A091 0000 		lds r26,curr
+ 426 0362 E091 0000 		lds r30,meal
+ 427 0366 F0E0      		ldi r31,lo8(0)
+ 428 0368 E050      		subi r30,lo8(-(LED_sel))
+ 429 036a F040      		sbci r31,hi8(-(LED_sel))
+ 430 036c B0E0      		ldi r27,lo8(0)
+ 431 036e A050      		subi r26,lo8(-(LED_sel))
+ 432 0370 B040      		sbci r27,hi8(-(LED_sel))
+ 433 0372 8081      		ld r24,Z
+ 434 0374 9C91      		ld r25,X
+ 435 0376 892B      		or r24,r25
+ 436 0378 8BBB      		out 59-32,r24
+ 437 037a 00C0      		rjmp .L25
+ 438               		.size	DisplayTask, .-DisplayTask
+ 439               	.global	DeadTask
+ 440               		.type	DeadTask, @function
+ 441               	DeadTask:
+ 442 037c 9F92      		push r9
+ 443 037e AF92      		push r10
+ 444 0380 BF92      		push r11
+ 445 0382 CF92      		push r12
+ 446 0384 DF92      		push r13
+ 447 0386 EF92      		push r14
+ 448 0388 FF92      		push r15
+ 449 038a 0F93      		push r16
+ 450 038c 1F93      		push r17
+ 451 038e DF93      		push r29
+ 452 0390 CF93      		push r28
+ 453 0392 0F92      		push __tmp_reg__
+ 454 0394 CDB7      		in r28,__SP_L__
+ 455 0396 DEB7      		in r29,__SP_H__
+ 456               	/* prologue: function */
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 9
+
+
+ 457               	/* frame size = 1 */
+ 458 0398 8091 0000 		lds r24,f_grp
+ 459 039c 9091 0000 		lds r25,(f_grp)+1
+ 460 03a0 6FEF      		ldi r22,lo8(-1)
+ 461 03a2 42E8      		ldi r20,lo8(-126)
+ 462 03a4 20E0      		ldi r18,lo8(0)
+ 463 03a6 30E0      		ldi r19,hi8(0)
+ 464 03a8 5E01      		movw r10,r28
+ 465 03aa 0894      		sec
+ 466 03ac A11C      		adc r10,__zero_reg__
+ 467 03ae B11C      		adc r11,__zero_reg__
+ 468 03b0 8501      		movw r16,r10
+ 469 03b2 0E94 0000 		call OSFlagPend
+ 470 03b6 00E0      		ldi r16,lo8(0)
+ 471 03b8 10E0      		ldi r17,hi8(0)
+ 472 03ba FEE5      		ldi r31,lo8(94)
+ 473 03bc DF2E      		mov r13,r31
+ 474 03be E0E1      		ldi r30,lo8(10000)
+ 475 03c0 EE2E      		mov r14,r30
+ 476 03c2 E7E2      		ldi r30,hi8(10000)
+ 477 03c4 FE2E      		mov r15,r30
+ 478 03c6 77E7      		ldi r23,lo8(119)
+ 479 03c8 972E      		mov r9,r23
+ 480 03ca 69E7      		ldi r22,lo8(121)
+ 481 03cc C62E      		mov r12,r22
+ 482               	.L48:
+ 483 03ce 8091 0000 		lds r24,Sem
+ 484 03d2 9091 0000 		lds r25,(Sem)+1
+ 485 03d6 60E0      		ldi r22,lo8(0)
+ 486 03d8 70E0      		ldi r23,hi8(0)
+ 487 03da A501      		movw r20,r10
+ 488 03dc 0E94 0000 		call OSSemPend
+ 489 03e0 1BBA      		out 59-32,__zero_reg__
+ 490 03e2 D5BA      		out 53-32,r13
+ 491 03e4 8091 0000 		lds r24,FND_sel
+ 492 03e8 8093 6500 		sts 101,r24
+ 493 03ec C701      		movw r24,r14
+ 494               	/* #APP */
+ 495               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 496 03ee 0197      		1: sbiw r24,1
+ 497 03f0 01F4      		brne 1b
+ 498               	 ;  0 "" 2
+ 499               	/* #NOAPP */
+ 500 03f2 95BA      		out 53-32,r9
+ 501 03f4 8091 0000 		lds r24,FND_sel+1
+ 502 03f8 8093 6500 		sts 101,r24
+ 503 03fc C701      		movw r24,r14
+ 504               	/* #APP */
+ 505               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 506 03fe 0197      		1: sbiw r24,1
+ 507 0400 01F4      		brne 1b
+ 508               	 ;  0 "" 2
+ 509               	/* #NOAPP */
+ 510 0402 C5BA      		out 53-32,r12
+ 511 0404 8091 0000 		lds r24,FND_sel+2
+ 512 0408 8093 6500 		sts 101,r24
+ 513 040c C701      		movw r24,r14
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 10
+
+
+ 514               	/* #APP */
+ 515               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 516 040e 0197      		1: sbiw r24,1
+ 517 0410 01F4      		brne 1b
+ 518               	 ;  0 "" 2
+ 519               	/* #NOAPP */
+ 520 0412 D5BA      		out 53-32,r13
+ 521 0414 8091 0000 		lds r24,FND_sel+3
+ 522 0418 8093 6500 		sts 101,r24
+ 523 041c C701      		movw r24,r14
+ 524               	/* #APP */
+ 525               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 526 041e 0197      		1: sbiw r24,1
+ 527 0420 01F4      		brne 1b
+ 528               	 ;  0 "" 2
+ 529               	/* #NOAPP */
+ 530 0422 0537      		cpi r16,117
+ 531 0424 1105      		cpc r17,__zero_reg__
+ 532 0426 04F4      		brge .L47
+ 533 0428 0F5F      		subi r16,lo8(-(1))
+ 534 042a 1F4F      		sbci r17,hi8(-(1))
+ 535 042c C801      		movw r24,r16
+ 536 042e 69E0      		ldi r22,lo8(9)
+ 537 0430 70E0      		ldi r23,hi8(9)
+ 538 0432 0E94 0000 		call __divmodhi4
+ 539 0436 FB01      		movw r30,r22
+ 540 0438 EE0F      		lsl r30
+ 541 043a FF1F      		rol r31
+ 542 043c E050      		subi r30,lo8(-(dead))
+ 543 043e F040      		sbci r31,hi8(-(dead))
+ 544 0440 8081      		ld r24,Z
+ 545 0442 9181      		ldd r25,Z+1
+ 546 0444 9093 0000 		sts (sound)+1,r25
+ 547 0448 8093 0000 		sts sound,r24
+ 548               	.L47:
+ 549 044c 8091 0000 		lds r24,Sem
+ 550 0450 9091 0000 		lds r25,(Sem)+1
+ 551 0454 0E94 0000 		call OSSemPost
+ 552 0458 00C0      		rjmp .L48
+ 553               		.size	DeadTask, .-DeadTask
+ 554               	.global	AllClearTask
+ 555               		.type	AllClearTask, @function
+ 556               	AllClearTask:
+ 557 045a 9F92      		push r9
+ 558 045c AF92      		push r10
+ 559 045e BF92      		push r11
+ 560 0460 CF92      		push r12
+ 561 0462 DF92      		push r13
+ 562 0464 EF92      		push r14
+ 563 0466 FF92      		push r15
+ 564 0468 0F93      		push r16
+ 565 046a 1F93      		push r17
+ 566 046c DF93      		push r29
+ 567 046e CF93      		push r28
+ 568 0470 0F92      		push __tmp_reg__
+ 569 0472 CDB7      		in r28,__SP_L__
+ 570 0474 DEB7      		in r29,__SP_H__
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 11
+
+
+ 571               	/* prologue: function */
+ 572               	/* frame size = 1 */
+ 573 0476 8091 0000 		lds r24,MQueue
+ 574 047a 9091 0000 		lds r25,(MQueue)+1
+ 575 047e 60E0      		ldi r22,lo8(0)
+ 576 0480 70E0      		ldi r23,hi8(0)
+ 577 0482 6E01      		movw r12,r28
+ 578 0484 0894      		sec
+ 579 0486 C11C      		adc r12,__zero_reg__
+ 580 0488 D11C      		adc r13,__zero_reg__
+ 581 048a A601      		movw r20,r12
+ 582 048c 0E94 0000 		call OSQPend
+ 583 0490 8130      		cpi r24,lo8(1)
+ 584 0492 01F0      		breq .L55
+ 585               	/* epilogue start */
+ 586 0494 0F90      		pop __tmp_reg__
+ 587 0496 CF91      		pop r28
+ 588 0498 DF91      		pop r29
+ 589 049a 1F91      		pop r17
+ 590 049c 0F91      		pop r16
+ 591 049e FF90      		pop r15
+ 592 04a0 EF90      		pop r14
+ 593 04a2 DF90      		pop r13
+ 594 04a4 CF90      		pop r12
+ 595 04a6 BF90      		pop r11
+ 596 04a8 AF90      		pop r10
+ 597 04aa 9F90      		pop r9
+ 598 04ac 0895      		ret
+ 599               	.L55:
+ 600 04ae 00E0      		ldi r16,lo8(0)
+ 601 04b0 10E0      		ldi r17,hi8(0)
+ 602 04b2 28E3      		ldi r18,lo8(56)
+ 603 04b4 B22E      		mov r11,r18
+ 604 04b6 90E1      		ldi r25,lo8(10000)
+ 605 04b8 E92E      		mov r14,r25
+ 606 04ba 97E2      		ldi r25,hi8(10000)
+ 607 04bc F92E      		mov r15,r25
+ 608 04be 8EE3      		ldi r24,lo8(62)
+ 609 04c0 982E      		mov r9,r24
+ 610 04c2 B1E7      		ldi r27,lo8(113)
+ 611 04c4 AB2E      		mov r10,r27
+ 612               	.L53:
+ 613 04c6 8091 0000 		lds r24,Sem
+ 614 04ca 9091 0000 		lds r25,(Sem)+1
+ 615 04ce 60E0      		ldi r22,lo8(0)
+ 616 04d0 70E0      		ldi r23,hi8(0)
+ 617 04d2 A601      		movw r20,r12
+ 618 04d4 0E94 0000 		call OSSemPend
+ 619 04d8 1BBA      		out 59-32,__zero_reg__
+ 620 04da B5BA      		out 53-32,r11
+ 621 04dc 8091 0000 		lds r24,FND_sel
+ 622 04e0 8093 6500 		sts 101,r24
+ 623 04e4 C701      		movw r24,r14
+ 624               	/* #APP */
+ 625               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 626 04e6 0197      		1: sbiw r24,1
+ 627 04e8 01F4      		brne 1b
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 12
+
+
+ 628               	 ;  0 "" 2
+ 629               	/* #NOAPP */
+ 630 04ea B5BA      		out 53-32,r11
+ 631 04ec 8091 0000 		lds r24,FND_sel+1
+ 632 04f0 8093 6500 		sts 101,r24
+ 633 04f4 C701      		movw r24,r14
+ 634               	/* #APP */
+ 635               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 636 04f6 0197      		1: sbiw r24,1
+ 637 04f8 01F4      		brne 1b
+ 638               	 ;  0 "" 2
+ 639               	/* #NOAPP */
+ 640 04fa 95BA      		out 53-32,r9
+ 641 04fc 8091 0000 		lds r24,FND_sel+2
+ 642 0500 8093 6500 		sts 101,r24
+ 643 0504 C701      		movw r24,r14
+ 644               	/* #APP */
+ 645               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 646 0506 0197      		1: sbiw r24,1
+ 647 0508 01F4      		brne 1b
+ 648               	 ;  0 "" 2
+ 649               	/* #NOAPP */
+ 650 050a A5BA      		out 53-32,r10
+ 651 050c 8091 0000 		lds r24,FND_sel+3
+ 652 0510 8093 6500 		sts 101,r24
+ 653 0514 C701      		movw r24,r14
+ 654               	/* #APP */
+ 655               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 656 0516 0197      		1: sbiw r24,1
+ 657 0518 01F4      		brne 1b
+ 658               	 ;  0 "" 2
+ 659               	/* #NOAPP */
+ 660 051a 84E0      		ldi r24,hi8(1140)
+ 661 051c 0437      		cpi r16,lo8(1140)
+ 662 051e 1807      		cpc r17,r24
+ 663 0520 04F4      		brge .L52
+ 664 0522 0F5F      		subi r16,lo8(-(1))
+ 665 0524 1F4F      		sbci r17,hi8(-(1))
+ 666 0526 C801      		movw r24,r16
+ 667 0528 6CE0      		ldi r22,lo8(12)
+ 668 052a 70E0      		ldi r23,hi8(12)
+ 669 052c 0E94 0000 		call __divmodhi4
+ 670 0530 FB01      		movw r30,r22
+ 671 0532 EE0F      		lsl r30
+ 672 0534 FF1F      		rol r31
+ 673 0536 E050      		subi r30,lo8(-(full))
+ 674 0538 F040      		sbci r31,hi8(-(full))
+ 675 053a 8081      		ld r24,Z
+ 676 053c 9181      		ldd r25,Z+1
+ 677 053e 9093 0000 		sts (sound)+1,r25
+ 678 0542 8093 0000 		sts sound,r24
+ 679               	.L52:
+ 680 0546 8091 0000 		lds r24,Sem
+ 681 054a 9091 0000 		lds r25,(Sem)+1
+ 682 054e 0E94 0000 		call OSSemPost
+ 683 0552 00C0      		rjmp .L53
+ 684               		.size	AllClearTask, .-AllClearTask
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 13
+
+
+ 685               	.global	StageClearTask
+ 686               		.type	StageClearTask, @function
+ 687               	StageClearTask:
+ 688 0554 5F92      		push r5
+ 689 0556 6F92      		push r6
+ 690 0558 7F92      		push r7
+ 691 055a 8F92      		push r8
+ 692 055c 9F92      		push r9
+ 693 055e AF92      		push r10
+ 694 0560 BF92      		push r11
+ 695 0562 CF92      		push r12
+ 696 0564 DF92      		push r13
+ 697 0566 EF92      		push r14
+ 698 0568 FF92      		push r15
+ 699 056a 0F93      		push r16
+ 700 056c 1F93      		push r17
+ 701 056e DF93      		push r29
+ 702 0570 CF93      		push r28
+ 703 0572 0F92      		push __tmp_reg__
+ 704 0574 CDB7      		in r28,__SP_L__
+ 705 0576 DEB7      		in r29,__SP_H__
+ 706               	/* prologue: function */
+ 707               	/* frame size = 1 */
+ 708 0578 4E01      		movw r8,r28
+ 709 057a 0894      		sec
+ 710 057c 811C      		adc r8,__zero_reg__
+ 711 057e 911C      		adc r9,__zero_reg__
+ 712 0580 EEE5      		ldi r30,lo8(94)
+ 713 0582 AE2E      		mov r10,r30
+ 714 0584 00E1      		ldi r16,lo8(10000)
+ 715 0586 17E2      		ldi r17,hi8(10000)
+ 716 0588 7DE3      		ldi r23,lo8(61)
+ 717 058a B72E      		mov r11,r23
+ 718 058c 6624      		clr r6
+ 719 058e 6A94      		dec r6
+ 720 0590 762C      		mov r7,r6
+ 721 0592 67E0      		ldi r22,lo8(7)
+ 722 0594 562E      		mov r5,r22
+ 723               	.L64:
+ 724 0596 8091 0000 		lds r24,Mbox
+ 725 059a 9091 0000 		lds r25,(Mbox)+1
+ 726 059e 60E0      		ldi r22,lo8(0)
+ 727 05a0 70E0      		ldi r23,hi8(0)
+ 728 05a2 A401      		movw r20,r8
+ 729 05a4 0E94 0000 		call OSMboxPend
+ 730 05a8 8130      		cpi r24,lo8(1)
+ 731 05aa 01F4      		brne .L64
+ 732 05ac 8091 0000 		lds r24,Sem
+ 733 05b0 9091 0000 		lds r25,(Sem)+1
+ 734 05b4 60E0      		ldi r22,lo8(0)
+ 735 05b6 70E0      		ldi r23,hi8(0)
+ 736 05b8 A401      		movw r20,r8
+ 737 05ba 0E94 0000 		call OSSemPend
+ 738 05be 1BBA      		out 59-32,__zero_reg__
+ 739 05c0 C090 0000 		lds r12,FND_sel
+ 740 05c4 4091 0000 		lds r20,FND_DATA
+ 741 05c8 D090 0000 		lds r13,FND_sel+1
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 14
+
+
+ 742 05cc E090 0000 		lds r14,FND_sel+2
+ 743 05d0 F090 0000 		lds r15,FND_sel+3
+ 744 05d4 20E0      		ldi r18,lo8(0)
+ 745 05d6 30E0      		ldi r19,hi8(0)
+ 746               	.L59:
+ 747 05d8 A5BA      		out 53-32,r10
+ 748 05da C092 6500 		sts 101,r12
+ 749 05de C801      		movw r24,r16
+ 750               	/* #APP */
+ 751               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 752 05e0 0197      		1: sbiw r24,1
+ 753 05e2 01F4      		brne 1b
+ 754               	 ;  0 "" 2
+ 755               	/* #NOAPP */
+ 756 05e4 45BB      		out 53-32,r20
+ 757 05e6 D092 6500 		sts 101,r13
+ 758 05ea C801      		movw r24,r16
+ 759               	/* #APP */
+ 760               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 761 05ec 0197      		1: sbiw r24,1
+ 762 05ee 01F4      		brne 1b
+ 763               	 ;  0 "" 2
+ 764               	/* #NOAPP */
+ 765 05f0 45BB      		out 53-32,r20
+ 766 05f2 E092 6500 		sts 101,r14
+ 767 05f6 C801      		movw r24,r16
+ 768               	/* #APP */
+ 769               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 770 05f8 0197      		1: sbiw r24,1
+ 771 05fa 01F4      		brne 1b
+ 772               	 ;  0 "" 2
+ 773               	/* #NOAPP */
+ 774 05fc B5BA      		out 53-32,r11
+ 775 05fe F092 6500 		sts 101,r15
+ 776 0602 C801      		movw r24,r16
+ 777               	/* #APP */
+ 778               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 779 0604 0197      		1: sbiw r24,1
+ 780 0606 01F4      		brne 1b
+ 781               	 ;  0 "" 2
+ 782               	/* #NOAPP */
+ 783 0608 283C      		cpi r18,200
+ 784 060a 3105      		cpc r19,__zero_reg__
+ 785 060c 04F4      		brge .L58
+ 786 060e C901      		movw r24,r18
+ 787 0610 64E1      		ldi r22,lo8(20)
+ 788 0612 70E0      		ldi r23,hi8(20)
+ 789 0614 0E94 0000 		call __divmodhi4
+ 790 0618 FB01      		movw r30,r22
+ 791 061a EE0F      		lsl r30
+ 792 061c FF1F      		rol r31
+ 793 061e E050      		subi r30,lo8(-(clear))
+ 794 0620 F040      		sbci r31,hi8(-(clear))
+ 795 0622 8081      		ld r24,Z
+ 796 0624 9181      		ldd r25,Z+1
+ 797 0626 9093 0000 		sts (sound)+1,r25
+ 798 062a 8093 0000 		sts sound,r24
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 15
+
+
+ 799               	.L58:
+ 800 062e 2F5F      		subi r18,lo8(-(1))
+ 801 0630 3F4F      		sbci r19,hi8(-(1))
+ 802 0632 81E0      		ldi r24,hi8(300)
+ 803 0634 2C32      		cpi r18,lo8(300)
+ 804 0636 3807      		cpc r19,r24
+ 805 0638 01F4      		brne .L59
+ 806 063a 8091 0000 		lds r24,stage
+ 807 063e 8F5F      		subi r24,lo8(-(1))
+ 808 0640 8093 0000 		sts stage,r24
+ 809 0644 7092 0000 		sts (cnt)+1,r7
+ 810 0648 6092 0000 		sts cnt,r6
+ 811 064c 5092 0000 		sts curr,r5
+ 812 0650 5092 0000 		sts meal,r5
+ 813 0654 1092 0000 		sts (flag)+1,__zero_reg__
+ 814 0658 1092 0000 		sts flag,__zero_reg__
+ 815 065c 8091 0000 		lds r24,Sem
+ 816 0660 9091 0000 		lds r25,(Sem)+1
+ 817 0664 0E94 0000 		call OSSemPost
+ 818 0668 00C0      		rjmp .L64
+ 819               		.size	StageClearTask, .-StageClearTask
+ 820               	.global	main
+ 821               		.type	main, @function
+ 822               	main:
+ 823 066a DF93      		push r29
+ 824 066c CF93      		push r28
+ 825 066e 0F92      		push __tmp_reg__
+ 826 0670 CDB7      		in r28,__SP_L__
+ 827 0672 DEB7      		in r29,__SP_H__
+ 828               	/* prologue: function */
+ 829               	/* frame size = 1 */
+ 830 0674 0E94 0000 		call OSInit
+ 831               	/* #APP */
+ 832               	 ;  89 "lab2.c" 1
+ 833 0678 F894      		cli
+ 834               	 ;  0 "" 2
+ 835               	/* #NOAPP */
+ 836 067a 8FEF      		ldi r24,lo8(-1)
+ 837 067c 8ABB      		out 58-32,r24
+ 838 067e 84BB      		out 52-32,r24
+ 839 0680 8FE0      		ldi r24,lo8(15)
+ 840 0682 8093 6400 		sts 100,r24
+ 841 0686 80E1      		ldi r24,lo8(16)
+ 842 0688 87BB      		out 55-32,r24
+ 843 068a 8FEC      		ldi r24,lo8(-49)
+ 844 068c 82B9      		out 34-32,r24
+ 845 068e 8AE0      		ldi r24,lo8(10)
+ 846 0690 8ABF      		out 90-32,r24
+ 847 0692 80E3      		ldi r24,lo8(48)
+ 848 0694 89BF      		out 89-32,r24
+ 849 0696 87E0      		ldi r24,lo8(7)
+ 850 0698 83BF      		out 83-32,r24
+ 851 069a 83E0      		ldi r24,lo8(3)
+ 852 069c 85BD      		out 69-32,r24
+ 853 069e 81E4      		ldi r24,lo8(65)
+ 854 06a0 87BF      		out 87-32,r24
+ 855 06a2 84E6      		ldi r24,lo8(100)
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 16
+
+
+ 856 06a4 82BF      		out 82-32,r24
+ 857               	/* #APP */
+ 858               	 ;  101 "lab2.c" 1
+ 859 06a6 7894      		sei
+ 860               	 ;  0 "" 2
+ 861               	/* #NOAPP */
+ 862 06a8 80E0      		ldi r24,lo8(0)
+ 863 06aa 90E0      		ldi r25,hi8(0)
+ 864 06ac 0E94 0000 		call OSMboxCreate
+ 865 06b0 9093 0000 		sts (Mbox)+1,r25
+ 866 06b4 8093 0000 		sts Mbox,r24
+ 867 06b8 84E0      		ldi r24,lo8(4)
+ 868 06ba 90E0      		ldi r25,hi8(4)
+ 869 06bc 0E94 0000 		call OSSemCreate
+ 870 06c0 9093 0000 		sts (Sem)+1,r25
+ 871 06c4 8093 0000 		sts Sem,r24
+ 872 06c8 80E0      		ldi r24,lo8(MQueue_Table)
+ 873 06ca 90E0      		ldi r25,hi8(MQueue_Table)
+ 874 06cc 64E0      		ldi r22,lo8(4)
+ 875 06ce 70E0      		ldi r23,hi8(4)
+ 876 06d0 0E94 0000 		call OSQCreate
+ 877 06d4 9093 0000 		sts (MQueue)+1,r25
+ 878 06d8 8093 0000 		sts MQueue,r24
+ 879 06dc 80E0      		ldi r24,lo8(0)
+ 880 06de BE01      		movw r22,r28
+ 881 06e0 6F5F      		subi r22,lo8(-(1))
+ 882 06e2 7F4F      		sbci r23,hi8(-(1))
+ 883 06e4 0E94 0000 		call OSFlagCreate
+ 884 06e8 9093 0000 		sts (f_grp)+1,r25
+ 885 06ec 8093 0000 		sts f_grp,r24
+ 886 06f0 80E0      		ldi r24,lo8(gs(StageClearTask))
+ 887 06f2 90E0      		ldi r25,hi8(gs(StageClearTask))
+ 888 06f4 60E0      		ldi r22,lo8(0)
+ 889 06f6 70E0      		ldi r23,hi8(0)
+ 890 06f8 40E0      		ldi r20,lo8(TaskStk+127)
+ 891 06fa 50E0      		ldi r21,hi8(TaskStk+127)
+ 892 06fc 21E0      		ldi r18,lo8(1)
+ 893 06fe 0E94 0000 		call OSTaskCreate
+ 894 0702 80E0      		ldi r24,lo8(gs(AllClearTask))
+ 895 0704 90E0      		ldi r25,hi8(gs(AllClearTask))
+ 896 0706 60E0      		ldi r22,lo8(0)
+ 897 0708 70E0      		ldi r23,hi8(0)
+ 898 070a 40E0      		ldi r20,lo8(TaskStk+255)
+ 899 070c 50E0      		ldi r21,hi8(TaskStk+255)
+ 900 070e 22E0      		ldi r18,lo8(2)
+ 901 0710 0E94 0000 		call OSTaskCreate
+ 902 0714 80E0      		ldi r24,lo8(gs(DeadTask))
+ 903 0716 90E0      		ldi r25,hi8(gs(DeadTask))
+ 904 0718 60E0      		ldi r22,lo8(0)
+ 905 071a 70E0      		ldi r23,hi8(0)
+ 906 071c 40E0      		ldi r20,lo8(TaskStk+383)
+ 907 071e 50E0      		ldi r21,hi8(TaskStk+383)
+ 908 0720 23E0      		ldi r18,lo8(3)
+ 909 0722 0E94 0000 		call OSTaskCreate
+ 910 0726 80E0      		ldi r24,lo8(gs(DisplayTask))
+ 911 0728 90E0      		ldi r25,hi8(gs(DisplayTask))
+ 912 072a 60E0      		ldi r22,lo8(0)
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 17
+
+
+ 913 072c 70E0      		ldi r23,hi8(0)
+ 914 072e 40E0      		ldi r20,lo8(TaskStk+511)
+ 915 0730 50E0      		ldi r21,hi8(TaskStk+511)
+ 916 0732 24E0      		ldi r18,lo8(4)
+ 917 0734 0E94 0000 		call OSTaskCreate
+ 918               	/* #APP */
+ 919               	 ;  113 "lab2.c" 1
+ 920 0738 7894      		sei
+ 921               	 ;  0 "" 2
+ 922               	/* #NOAPP */
+ 923 073a 0E94 0000 		call OSStart
+ 924 073e 80E0      		ldi r24,lo8(0)
+ 925 0740 90E0      		ldi r25,hi8(0)
+ 926               	/* epilogue start */
+ 927 0742 0F90      		pop __tmp_reg__
+ 928 0744 CF91      		pop r28
+ 929 0746 DF91      		pop r29
+ 930 0748 0895      		ret
+ 931               		.size	main, .-main
+ 932               	.global	state
+ 933               	.global	state
+ 934               		.section .bss
+ 935               		.type	state, @object
+ 936               		.size	state, 2
+ 937               	state:
+ 938 0000 0000      		.skip 2,0
+ 939               	.global	flag
+ 940               	.global	flag
+ 941               		.type	flag, @object
+ 942               		.size	flag, 2
+ 943               	flag:
+ 944 0002 0000      		.skip 2,0
+ 945               	.global	curr
+ 946               		.data
+ 947               		.type	curr, @object
+ 948               		.size	curr, 1
+ 949               	curr:
+ 950 0000 07        		.byte	7
+ 951               	.global	meal
+ 952               		.type	meal, @object
+ 953               		.size	meal, 1
+ 954               	meal:
+ 955 0001 07        		.byte	7
+ 956               	.global	cnt
+ 957               		.type	cnt, @object
+ 958               		.size	cnt, 2
+ 959               	cnt:
+ 960 0002 FFFF      		.word	-1
+ 961               	.global	idx
+ 962               	.global	idx
+ 963               		.section .bss
+ 964               		.type	idx, @object
+ 965               		.size	idx, 2
+ 966               	idx:
+ 967 0004 0000      		.skip 2,0
+ 968               	.global	sound
+ 969               		.data
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 18
+
+
+ 970               		.type	sound, @object
+ 971               		.size	sound, 2
+ 972               	sound:
+ 973 0004 FFFF      		.word	-1
+ 974               	.global	FND_DATA
+ 975               		.type	FND_DATA, @object
+ 976               		.size	FND_DATA, 20
+ 977               	FND_DATA:
+ 978 0006 3F        		.byte	63
+ 979 0007 06        		.byte	6
+ 980 0008 5B        		.byte	91
+ 981 0009 4F        		.byte	79
+ 982 000a 66        		.byte	102
+ 983 000b 6D        		.byte	109
+ 984 000c 7D        		.byte	125
+ 985 000d 27        		.byte	39
+ 986 000e 7F        		.byte	127
+ 987 000f 6F        		.byte	111
+ 988 0010 77        		.byte	119
+ 989 0011 7C        		.byte	124
+ 990 0012 39        		.byte	57
+ 991 0013 5E        		.byte	94
+ 992 0014 79        		.byte	121
+ 993 0015 71        		.byte	113
+ 994 0016 80        		.byte	-128
+ 995 0017 40        		.byte	64
+ 996 0018 08        		.byte	8
+ 997 0019 00        		.byte	0
+ 998               	.global	FND_sel
+ 999               		.type	FND_sel, @object
+ 1000               		.size	FND_sel, 4
+ 1001               	FND_sel:
+ 1002 001a 01        		.byte	1
+ 1003 001b 02        		.byte	2
+ 1004 001c 04        		.byte	4
+ 1005 001d 08        		.byte	8
+ 1006               	.global	LED_sel
+ 1007               		.type	LED_sel, @object
+ 1008               		.size	LED_sel, 8
+ 1009               	LED_sel:
+ 1010 001e 01        		.byte	1
+ 1011 001f 02        		.byte	2
+ 1012 0020 04        		.byte	4
+ 1013 0021 08        		.byte	8
+ 1014 0022 10        		.byte	16
+ 1015 0023 20        		.byte	32
+ 1016 0024 40        		.byte	64
+ 1017 0025 80        		.byte	-128
+ 1018               	.global	stage
+ 1019               	.global	stage
+ 1020               		.section .bss
+ 1021               		.type	stage, @object
+ 1022               		.size	stage, 1
+ 1023               	stage:
+ 1024 0006 00        		.skip 1,0
+ 1025               	.global	timer
+ 1026               		.data
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 19
+
+
+ 1027               		.type	timer, @object
+ 1028               		.size	timer, 6
+ 1029               	timer:
+ 1030 0026 A00F      		.word	4000
+ 1031 0028 B80B      		.word	3000
+ 1032 002a D007      		.word	2000
+ 1033               	.global	eat
+ 1034               		.type	eat, @object
+ 1035               		.size	eat, 6
+ 1036               	eat:
+ 1037 002c 8900      		.word	137
+ 1038 002e 6100      		.word	97
+ 1039 0030 FFFF      		.word	-1
+ 1040               	.global	clear
+ 1041               		.type	clear, @object
+ 1042               		.size	clear, 20
+ 1043               	clear:
+ 1044 0032 1100      		.word	17
+ 1045 0034 4200      		.word	66
+ 1046 0036 6100      		.word	97
+ 1047 0038 8900      		.word	137
+ 1048 003a FFFF      		.word	-1
+ 1049 003c 6100      		.word	97
+ 1050 003e 8900      		.word	137
+ 1051 0040 FFFF      		.word	-1
+ 1052 0042 FFFF      		.word	-1
+ 1053 0044 FFFF      		.word	-1
+ 1054               	.global	dead
+ 1055               		.type	dead, @object
+ 1056               		.size	dead, 28
+ 1057               	dead:
+ 1058 0046 4200      		.word	66
+ 1059 0048 FFFF      		.word	-1
+ 1060 004a 4200      		.word	66
+ 1061 004c FFFF      		.word	-1
+ 1062 004e 4200      		.word	66
+ 1063 0050 FFFF      		.word	-1
+ 1064 0052 1100      		.word	17
+ 1065 0054 1100      		.word	17
+ 1066 0056 1100      		.word	17
+ 1067 0058 1100      		.word	17
+ 1068 005a 1100      		.word	17
+ 1069 005c 1100      		.word	17
+ 1070 005e 1100      		.word	17
+ 1071 0060 FFFF      		.word	-1
+ 1072               	.global	full
+ 1073               		.type	full, @object
+ 1074               		.size	full, 192
+ 1075               	full:
+ 1076 0062 1100      		.word	17
+ 1077 0064 FFFF      		.word	-1
+ 1078 0066 FFFF      		.word	-1
+ 1079 0068 2B00      		.word	43
+ 1080 006a FFFF      		.word	-1
+ 1081 006c FFFF      		.word	-1
+ 1082 006e 1100      		.word	17
+ 1083 0070 FFFF      		.word	-1
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 20
+
+
+ 1084 0072 FFFF      		.word	-1
+ 1085 0074 6100      		.word	97
+ 1086 0076 FFFF      		.word	-1
+ 1087 0078 FFFF      		.word	-1
+ 1088 007a FFFF      		.word	-1
+ 1089 007c 4D00      		.word	77
+ 1090 007e FFFF      		.word	-1
+ 1091 0080 FFFF      		.word	-1
+ 1092 0082 FFFF      		.word	-1
+ 1093 0084 FFFF      		.word	-1
+ 1094 0086 FFFF      		.word	-1
+ 1095 0088 FFFF      		.word	-1
+ 1096 008a FFFF      		.word	-1
+ 1097 008c FFFF      		.word	-1
+ 1098 008e FFFF      		.word	-1
+ 1099 0090 FFFF      		.word	-1
+ 1100 0092 4D00      		.word	77
+ 1101 0094 FFFF      		.word	-1
+ 1102 0096 FFFF      		.word	-1
+ 1103 0098 6100      		.word	97
+ 1104 009a FFFF      		.word	-1
+ 1105 009c FFFF      		.word	-1
+ 1106 009e 4D00      		.word	77
+ 1107 00a0 FFFF      		.word	-1
+ 1108 00a2 FFFF      		.word	-1
+ 1109 00a4 8900      		.word	137
+ 1110 00a6 FFFF      		.word	-1
+ 1111 00a8 FFFF      		.word	-1
+ 1112 00aa FFFF      		.word	-1
+ 1113 00ac 7900      		.word	121
+ 1114 00ae FFFF      		.word	-1
+ 1115 00b0 FFFF      		.word	-1
+ 1116 00b2 FFFF      		.word	-1
+ 1117 00b4 FFFF      		.word	-1
+ 1118 00b6 FFFF      		.word	-1
+ 1119 00b8 FFFF      		.word	-1
+ 1120 00ba FFFF      		.word	-1
+ 1121 00bc FFFF      		.word	-1
+ 1122 00be FFFF      		.word	-1
+ 1123 00c0 FFFF      		.word	-1
+ 1124 00c2 7200      		.word	114
+ 1125 00c4 FFFF      		.word	-1
+ 1126 00c6 7200      		.word	114
+ 1127 00c8 FFFF      		.word	-1
+ 1128 00ca FFFF      		.word	-1
+ 1129 00cc 7200      		.word	114
+ 1130 00ce FFFF      		.word	-1
+ 1131 00d0 8900      		.word	137
+ 1132 00d2 FFFF      		.word	-1
+ 1133 00d4 9600      		.word	150
+ 1134 00d6 FFFF      		.word	-1
+ 1135 00d8 FFFF      		.word	-1
+ 1136 00da 7200      		.word	114
+ 1137 00dc FFFF      		.word	-1
+ 1138 00de 8900      		.word	137
+ 1139 00e0 FFFF      		.word	-1
+ 1140 00e2 8900      		.word	137
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 21
+
+
+ 1141 00e4 FFFF      		.word	-1
+ 1142 00e6 6100      		.word	97
+ 1143 00e8 FFFF      		.word	-1
+ 1144 00ea 7200      		.word	114
+ 1145 00ec FFFF      		.word	-1
+ 1146 00ee FFFF      		.word	-1
+ 1147 00f0 FFFF      		.word	-1
+ 1148 00f2 FFFF      		.word	-1
+ 1149 00f4 FFFF      		.word	-1
+ 1150 00f6 FFFF      		.word	-1
+ 1151 00f8 FFFF      		.word	-1
+ 1152 00fa FFFF      		.word	-1
+ 1153 00fc FFFF      		.word	-1
+ 1154 00fe FFFF      		.word	-1
+ 1155 0100 FFFF      		.word	-1
+ 1156 0102 1100      		.word	17
+ 1157 0104 FFFF      		.word	-1
+ 1158 0106 2B00      		.word	43
+ 1159 0108 FFFF      		.word	-1
+ 1160 010a 1100      		.word	17
+ 1161 010c FFFF      		.word	-1
+ 1162 010e 2B00      		.word	43
+ 1163 0110 FFFF      		.word	-1
+ 1164 0112 1100      		.word	17
+ 1165 0114 FFFF      		.word	-1
+ 1166 0116 7200      		.word	114
+ 1167 0118 FFFF      		.word	-1
+ 1168 011a 4D00      		.word	77
+ 1169 011c FFFF      		.word	-1
+ 1170 011e FFFF      		.word	-1
+ 1171 0120 FFFF      		.word	-1
+ 1172               		.comm TaskStk,512,1
+ 1173               		.comm Mbox,2,1
+ 1174               		.comm Sem,2,1
+ 1175               		.comm MQueue,2,1
+ 1176               		.comm f_grp,2,1
+ 1177               		.comm MQueue_Table,8,1
+ 1178               	.global __do_copy_data
+ 1179               	.global __do_clear_bss
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lab2.c
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:2      *ABS*:0000003f __SREG__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:3      *ABS*:0000003e __SP_H__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:4      *ABS*:0000003d __SP_L__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:5      *ABS*:00000034 __CCP__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:11     .text:00000000 __vector_10
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:972    .data:00000004 sound
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:937    .bss:00000000 state
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:59     .text:00000060 __vector_5
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:943    .bss:00000002 flag
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:949    .data:00000000 curr
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:954    .data:00000001 meal
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:112    .text:000000cc __vector_6
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:156    .text:00000120 DisplayTask
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:959    .data:00000002 cnt
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1023   .bss:00000006 stage
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1029   .data:00000026 timer
+                            *COM*:00000002 Sem
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:977    .data:00000006 FND_DATA
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1001   .data:0000001a FND_sel
+                            *COM*:00000002 Mbox
+                            *COM*:00000002 MQueue
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1036   .data:0000002c eat
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1009   .data:0000001e LED_sel
+                            *COM*:00000002 f_grp
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:441    .text:0000037c DeadTask
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1057   .data:00000046 dead
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:556    .text:0000045a AllClearTask
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1075   .data:00000062 full
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:687    .text:00000554 StageClearTask
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:1043   .data:00000032 clear
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:822    .text:0000066a main
+                            *COM*:00000008 MQueue_Table
+                            *COM*:00000200 TaskStk
+C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s:966    .bss:00000004 idx
+
+UNDEFINED SYMBOLS
+OSSemPend
+__divmodhi4
+rand
+OSSemPost
+OSMboxPost
+OSQPost
+OSFlagPost
+OSFlagPend
+OSQPend
+OSMboxPend
+OSInit
+OSMboxCreate
+OSSemCreate
+OSQCreate
+OSFlagCreate
+OSTaskCreate
+OSStart
+GAS LISTING C:\Users\kin16\AppData\Local\Temp/cctD3oz5.s 			page 23
+
+
+__do_copy_data
+__do_clear_bss
